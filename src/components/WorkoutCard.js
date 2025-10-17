@@ -127,8 +127,8 @@ const WorkoutCard = ({ workout, fetchWorkouts, API_URL }) => {
   };
 
   return (
-    <Card className="mb-4 shadow-sm fade-in">
-      <Card.Header className="bg-white border-bottom-0 pt-3">
+    <Card className="glass-card workout-card mb-4 fade-in">
+      <Card.Header className="bg-transparent border-bottom-0 pt-3">
         <Badge
           bg={getBadgeVariant(workout.status)}
           className="float-end px-3 py-2"

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 import { Navigate, Link } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import notyf from '../utils/notyf';
@@ -101,109 +101,130 @@ export default function Register() {
         }
     }, [email, password, confirmPassword]);
 
-    // Redirect to workouts page if user is already logged in
+    // Redirect to dashboard page if user is already logged in
     if (user.id !== null) {
-        return <Navigate to="/workouts" />;
+        return <Navigate to="/dashboard" />;
     }
 
     return (
-        <div className="d-flex justify-content-center">
-            <div className="card shadow-lg border-0 rounded-lg mt-4 mb-5" style={{ maxWidth: '500px', width: '100%' }}>
-                <div className="card-header bg-primary text-white text-center py-4">
-                    <h2 className="m-0 font-weight-bold">Create Account</h2>
-                </div>
-                <div className="card-body p-4 p-md-5">
-                    <Form onSubmit={(e) => registerUser(e)}>
-                        {/* Email Field */}
-                        <Form.Group controlId="userEmail" className="mb-4">
-                            <Form.Label className="fw-bold">Email address</Form.Label>
-                            <div className="input-group">
-                                <span className="input-group-text bg-light">
-                                    <i className="fas fa-envelope"></i>
-                                </span>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    className="py-2"
-                                />
-                            </div>
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
-                        </Form.Group>
+        <div className="auth-page py-5">
+            <Container>
+                <Row className="justify-content-center">
+                    <Col lg={5} md={7} sm={9}>
+                        <Card className="glass-card shadow-lg border-0">
+                            <Card.Body className="p-5">
+                                <div className="text-center mb-4">
+                                    <div className="glass-feature-icon auth-icon mb-3" style={{width: '80px', height: '80px'}}>
+                                        <i className="fas fa-user-plus fa-2x text-primary"></i>
+                                    </div>
+                                    <h2 className="fw-bold mb-2 text-high-contrast">Join FitTracker</h2>
+                                    <p className="text-medium-contrast">Create your account and start your fitness journey</p>
+                                </div>
+                                
+                                <Form onSubmit={(e) => registerUser(e)}>
+                                    {/* Email Field */}
+                                    <Form.Group controlId="userEmail" className="mb-3">
+                                        <Form.Label className="fw-semibold">Email Address</Form.Label>
+                                        <div className="input-group">
+                                            <span className="input-group-text">
+                                                <i className="fas fa-envelope"></i>
+                                            </span>
+                                            <Form.Control
+                                                type="email"
+                                                placeholder="Enter your email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <Form.Text className="text-muted">
+                                            We'll never share your email with anyone else.
+                                        </Form.Text>
+                                    </Form.Group>
 
-                        {/* Password Field */}
-                        <Form.Group controlId="password" className="mb-4">
-                            <Form.Label className="fw-bold">Password</Form.Label>
-                            <div className="input-group">
-                                <span className="input-group-text bg-light">
-                                    <i className="fas fa-lock"></i>
-                                </span>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Minimum 8 characters"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                    minLength="8"
-                                    className="py-2"
-                                />
-                            </div>
-                            {password !== '' && password.length < 8 && (
-                                <Form.Text className="text-danger">
-                                    Password must be at least 8 characters long.
-                                </Form.Text>
-                            )}
-                        </Form.Group>
+                                    {/* Password Field */}
+                                    <Form.Group controlId="password" className="mb-3">
+                                        <Form.Label className="fw-semibold">Password</Form.Label>
+                                        <div className="input-group">
+                                            <span className="input-group-text">
+                                                <i className="fas fa-lock"></i>
+                                            </span>
+                                            <Form.Control
+                                                type="password"
+                                                placeholder="Minimum 8 characters"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                required
+                                                minLength="8"
+                                            />
+                                        </div>
+                                        {password !== '' && password.length < 8 && (
+                                            <Form.Text className="text-danger">
+                                                <i className="fas fa-exclamation-triangle me-1"></i>
+                                                Password must be at least 8 characters long.
+                                            </Form.Text>
+                                        )}
+                                    </Form.Group>
 
-                        {/* Confirm Password Field */}
-                        <Form.Group controlId="confirmPassword" className="mb-4">
-                            <Form.Label className="fw-bold">Confirm Password</Form.Label>
-                            <div className="input-group">
-                                <span className="input-group-text bg-light">
-                                    <i className="fas fa-lock"></i>
-                                </span>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Confirm your password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    required
-                                    className="py-2"
-                                />
-                            </div>
-                            {!passwordsMatch && confirmPassword !== '' && (
-                                <Form.Text className="text-danger">
-                                    Passwords do not match.
-                                </Form.Text>
-                            )}
-                        </Form.Group>
+                                    {/* Confirm Password Field */}
+                                    <Form.Group controlId="confirmPassword" className="mb-4">
+                                        <Form.Label className="fw-semibold">Confirm Password</Form.Label>
+                                        <div className="input-group">
+                                            <span className="input-group-text">
+                                                <i className="fas fa-lock"></i>
+                                            </span>
+                                            <Form.Control
+                                                type="password"
+                                                placeholder="Confirm your password"
+                                                value={confirmPassword}
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        {!passwordsMatch && confirmPassword !== '' && (
+                                            <Form.Text className="text-danger">
+                                                <i className="fas fa-times-circle me-1"></i>
+                                                Passwords do not match.
+                                            </Form.Text>
+                                        )}
+                                        {passwordsMatch && confirmPassword !== '' && password !== '' && (
+                                            <Form.Text className="text-success">
+                                                <i className="fas fa-check-circle me-1"></i>
+                                                Passwords match!
+                                            </Form.Text>
+                                        )}
+                                    </Form.Group>
 
-                        {/* Submit Button */}
-                        <div className="d-grid gap-2 mt-4 mb-3">
-                            {isActive ?
-                                <Button variant="primary" type="submit" id="submitBtn" size="lg" className="py-2">
-                                    Create Account
-                                </Button>
-                                :
-                                <Button variant="danger" type="submit" id="submitBtn" size="lg" className="py-2" disabled>
-                                    Create Account
-                                </Button>
-                            }
-                        </div>
+                                    {/* Submit Button */}
+                                    <div className="d-grid mb-3">
+                                        <Button 
+                                            variant={isActive ? "primary" : "secondary"} 
+                                            type="submit" 
+                                            id="submitBtn" 
+                                            size="lg" 
+                                            disabled={!isActive}
+                                            className="fw-semibold"
+                                        >
+                                            <i className="fas fa-user-plus me-2"></i>
+                                            Create Account
+                                        </Button>
+                                    </div>
+                                </Form>
 
-                        {/* Login Link */}
-                        <div className="text-center mt-3">
-                            <p>
-                                Already have an account? <Link to="/login" className="text-primary fw-bold">Login here</Link>
-                            </p>
-                        </div>
-                    </Form>
-                </div>
-            </div>
+                                {/* Login Link */}
+                                <div className="text-center">
+                                    <p className="text-medium-contrast mb-0">
+                                        Already have an account? {' '}
+                                        <Link to="/login" className="text-primary fw-semibold text-decoration-none">
+                                            Sign in here
+                                        </Link>
+                                    </p>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 }

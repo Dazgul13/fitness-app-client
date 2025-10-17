@@ -94,6 +94,7 @@ const AddWorkoutModal = ({ show, handleClose, fetchWorkouts }) => {
   
   return (
     <Modal show={show} onHide={handleClose} centered size="lg">
+      <div className="modal-content glass-modal">
       <Modal.Header className="bg-primary text-white py-3">
         <Modal.Title className="fw-bold">
           <i className="fas fa-dumbbell me-2"></i>
@@ -177,6 +178,7 @@ const AddWorkoutModal = ({ show, handleClose, fetchWorkouts }) => {
           </Button>
         </Modal.Footer>
       </Form>
+      </div>
     </Modal>
   );
 };

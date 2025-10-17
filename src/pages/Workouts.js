@@ -130,11 +130,11 @@ export default function Workouts() {
     <div className="workouts-page py-4">
       <Container>
         {/* Header Section */}
-        <div className="header-section mb-5">
+        <div className="glass-card header-section mb-4">
           <Row className="align-items-center">
             <Col lg={8} md={7} xs={12}>
-              <h1 className="display-4 fw-bold text-primary mb-3">My Workouts</h1>
-              <p className="lead text-muted">
+              <h1 className="display-4 fw-bold gradient-text mb-3 text-high-contrast">My Workouts</h1>
+              <p className="lead text-medium-contrast">
                 Track your fitness journey and stay motivated with your workout log.
               </p>
             </Col>
@@ -144,17 +144,17 @@ export default function Workouts() {
                 size="lg"
                 onClick={handleShowModal}
                 id="addWorkout" // Required ID as per specifications
-                className="px-4 py-2 shadow-sm"
+                className="px-4 py-2 shadow-sm me-2 mb-2"
               >
                 <i className="fas fa-plus me-2"></i>
                 Add Workout
               </Button>
               <Button
-                variant="danger"
+                variant="outline-danger"
                 size="lg"
                 onClick={handleDeleteAll}
                 id="deleteAllWorkouts"
-                className="px-3 py-2 ms-3 shadow-sm"
+                className="px-3 py-2 shadow-sm mb-2"
               >
                 <i className="fas fa-trash me-2"></i>
                 Delete All
@@ -162,6 +162,49 @@ export default function Workouts() {
             </Col>
           </Row>
         </div>
+
+        {/* Workout Statistics */}
+        {workouts.length > 0 && !isLoading && (
+          <div className="glass-stats-section workout-stats mb-4 rounded-4">
+            <Row>
+              <Col md={3} sm={6} className="mb-3 mb-md-0">
+                <div className="stat-item">
+                  <div className="stat-number">{workouts.length}</div>
+                  <div className="stat-label">Total Workouts</div>
+                </div>
+              </Col>
+              <Col md={3} sm={6} className="mb-3 mb-md-0">
+                <div className="stat-item">
+                  <div className="stat-number">
+                    {workouts.filter(w => w.status?.toLowerCase() === 'completed').length}
+                  </div>
+                  <div className="stat-label">Completed</div>
+                </div>
+              </Col>
+              <Col md={3} sm={6} className="mb-3 mb-md-0">
+                <div className="stat-item">
+                  <div className="stat-number">
+                    {workouts.reduce((total, workout) => {
+                      const duration = parseInt(workout.duration) || 0;
+                      return total + duration;
+                    }, 0)}
+                  </div>
+                  <div className="stat-label">Total Minutes</div>
+                </div>
+              </Col>
+              <Col md={3} sm={6}>
+                <div className="stat-item">
+                  <div className="stat-number">
+                    {workouts.length > 0 ? 
+                      Math.round((workouts.filter(w => w.status?.toLowerCase() === 'completed').length / workouts.length) * 100) 
+                      : 0}%
+                  </div>
+                  <div className="stat-label">Completion Rate</div>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        )}
         
         {/* Workouts Display */}
         <div className="workouts-container">

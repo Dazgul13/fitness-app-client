@@ -4,15 +4,19 @@ import { Container } from 'react-bootstrap';
 import './App.css';
 
 // Import pages
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Workouts from './pages/Workouts';
 
 // Import components
 import AppNavbar from './components/AppNavbar';
+import Footer from './components/Footer';
 
-// Import context provider
+// Import context providers
 import { UserProvider } from './context/UserContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 /**
  * App Component
@@ -21,29 +25,34 @@ import { UserProvider } from './context/UserContext';
  */
 function App() {
   return (
-    <UserProvider>
-      <Router>
-        {/* Navigation Bar */}
-        <AppNavbar />
-        
-        <Container>
-          <Routes>
-            {/* Redirect root to workouts page */}
-            <Route path="/" element={<Navigate to="/workouts" />} />
-            
-            {/* Authentication Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            
-            {/* Main Application Routes */}
-            <Route path="/workouts" element={<Workouts />} />
-            
-            {/* Fallback route - redirect to workouts */}
-            <Route path="*" element={<Navigate to="/workouts" />} />
-          </Routes>
-        </Container>
-      </Router>
-    </UserProvider>
+    <ThemeProvider>
+      <UserProvider>
+        <Router>
+          {/* Navigation Bar */}
+          <AppNavbar />
+          
+          <div className="main-content">
+            <Routes>
+              {/* Home page */}
+              <Route path="/" element={<Home />} />
+              
+              {/* Authentication Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              
+              {/* Main Application Routes */}
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/workouts" element={<Workouts />} />
+              
+              {/* Fallback route - redirect to home */}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </div>
+          
+          <Footer />
+        </Router>
+      </UserProvider>
+    </ThemeProvider>
   );
 }
 
